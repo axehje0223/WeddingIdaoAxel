@@ -1,0 +1,135 @@
+{
+  "couple": {
+    "names": "Ida och Axel",
+    "date": "5 juni 2027",
+    "dateISO": "2027-06-05T14:00:00+02:00"
+  },
+  "welcome": {
+    "title": "Välkomna till vår bröllopsdag",
+    "navTitle": "Välkommen",
+    "text": "Fan va fett eller?"
+  },
+  "ceremony": {
+    "title": "Tid, datum och plats för vigseln",
+    "navTitle": "Vigsel",
+    "date": "5 juni 2027",
+    "time": "14:00",
+    "location": "Starrkärr kyrka, Ale kommun, Västra Götaland",
+    "address": "Starrkärr 225, 446 95 Älvängen",
+    "description": "Ida är döpt här, hur kul?",
+    "mapUrl": "https://www.google.com/maps/place/Starrk%C3%A4rrs+kyrka/@57.9340019,12.1470972,514m/data=!3m2!1e3!4b1!4m6!3m5!1s0x46455c8f281e6ae3:0xf0da9a13b37cb004!8m2!3d57.9340019!4d12.1496775!16s%2Fg%2F11dyjq57r?entry=ttu&g_ep=EgoyMDI2MDkyOC4wIKXMDSoASAFQAw%3D%3D",
+    "mapLabel": "Visa på karta",
+    "image": "images/starrkrr-church.jpg"
+  },
+  "schedule": {
+    "title": "Schema för dagen",
+    "navTitle": "Schema",
+    "description": "Vi fyller på med tider och detaljer när allt är på plats.",
+    "events": [
+      {
+        "time": "13:15",
+        "title": "Buss avgår från Göteborg",
+        "description": "Om du har anmält bussplats har du fått mail om tid och plats."
+      },
+      {
+        "time": "14:00",
+        "title": "Vigsel",
+        "description": "Här vinner den som har flest folk på sin sida i kyrkan."
+      },
+      {
+        "time": "15:15",
+        "title": "Buss till Bröllops festen",
+        "description": "Nu snackar vi"
+      },
+
+        {
+          "time": "15:30",
+          "title": "Mingel och bubbel",
+          "description": "Gott!"
+        },
+      {
+        "time": "18:00",
+        "title": "Middag",
+        "description": "Också gott!"
+      },
+      {
+        "time": "21:00",
+        "title": "Feeeeeest",
+        "description": ""
+      },
+      {
+        "time": "01:00",
+        "title": "Buss hem avgår",
+        "description": "Ändå skönt eller?"
+      }
+    ],
+    "image": null
+  },
+  "transport": {
+    "title": "Transport",
+    "navTitle": "Transport",
+    "description": "Det kommer gå bussar från Göteborg 13:15 till Starrkärr kyrka och sedan från vigseln till festlokalen. Det går såklart också att köra bil mellan kyrkan och festen men för att köra hem sen får du inte ha druckit alkoholen.",
+    "options": [],
+    "image": null
+  },
+  "accommodation": {
+    "title": "Boende",
+    "navTitle": "Boende",
+    "description": "Info kommer kanske",
+    "options": [],
+    "image": null
+  },
+  "dressCode": {
+    "title": "Klädkod",
+    "navTitle": "Klädkod",
+    "name": "Kostym",
+    "description": "Formella klädkoden är kostym, Axel kommer ha frack och Ida kommer ha brudklänning. Ta gärna det ni har i garderoben, behöver knappt stryka det.",
+    "image": null
+  },
+  "guests": {
+    "title": "Gästlista",
+    "navTitle": "Gästlista",
+    "description": "Här är alla som kommer på brölloppet",
+    "linkLabel": "",
+    "linkUrl": "",
+    "image": null
+  },
+  "gifts": {
+    "title": "Presenter",
+    "navTitle": "Presenter",
+    "description": "Då vi ska renovera vårt nyköpte hus (shoutout Fredings väg 4) så får ni gärna bidra med skruv eller kontanter till skruv.",
+    "linkLabel": "",
+    "linkUrl": "",
+    "image": null
+  },
+  "contact": {
+    "title": "Frågor på det?",
+    "navTitle": "Kontakt",
+    "description": "Har ni några frågor? Hör gärna av er till idaoaxelgiftersig@gmail.com",
+    "email": "idaoaxelgiftersig@gmail.com",
+    "phone": "",
+    "person": "Ida och Axel",
+    "image": null
+  },
+  "images": {
+    "hero": {
+      "src": "images/BildPåOss_cropped.jpg",
+      "alt": "Bröllopsaffischen med Ida och Axel och deras namn."
+    },
+    "gallery": []
+  },
+  "rsvp": {
+    "title": "OSA",
+    "buttonText": "Anmäl här",
+    "formUrl": "",
+    "pendingText": "Formulärlänk kommer snart",
+    "image": {
+      "src": "images/osa_background.jpg",
+      "alt": "Handmålad OSA-illustration i blått och rött."
+    }
+  },
+  "footer": {
+    "text": "Ida och Axel · 5 juni 2027",
+    "note": "Vi ser fram emot att fira med er."
+  }
+}
