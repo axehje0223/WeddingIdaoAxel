@@ -517,6 +517,26 @@ a {
   inset: 0;
 }
 
+#dressCode .section-image {
+  width: fit-content;
+  max-width: 100%;
+  min-height: 0;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#dressCode .section-image img {
+  position: static;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 .timeline {
   display: grid;
   max-width: 780px;
@@ -939,6 +959,7 @@ body {
   aspect-ratio: auto;
   background: transparent;
   box-shadow: none;
+  cursor: pointer;
 }
 
 .hero-image img {
@@ -1097,6 +1118,15 @@ body {
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+.countdown-dialog {
+  justify-content: center;
+  margin: clamp(28px, 6vw, 56px) auto;
+}
+
+.countdown-dialog .countdown-item {
+  text-align: center;
 }
 
 .info-dialog .content-section {

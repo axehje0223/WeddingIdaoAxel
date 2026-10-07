@@ -80,11 +80,11 @@
     "image": null
   },
   "dressCode": {
-    "title": "Kavaj",
+    "title": "Vad ska du ha på dig?",
     "navTitle": "klädkod",
     "name": "Kavaj",
     "description": "Formella klädkoden är kavaj, Axel kommer ha frack och Ida kommer ha brudklänning. Vi gillar färgglatt och fint, ta gärna något ni redan har i garderoben. Vi kommer vara mycket utomhus med ojämt underlag.",
-    "image": null
+    "image": "images/vimplar.png"
   },
   "guests": {
     "title": "Gästlista",
@@ -105,7 +105,7 @@
   "contact": {
     "title": "Asså undrar du något?",
     "navTitle": "Kontakt",
-    "description": "Dra iväg ett mail till ---->",
+    "description": "Dra iväg ett mail:",
     "email": "idaochaxelskagiftas@gmail.com",
     "phone": "",
     "person": "Ida och Axel",
@@ -120,8 +120,8 @@
   },
   "rsvp": {
     "title": "OSA",
-    "buttonText": "Anmäl här",
-    "formUrl": "",
+    "buttonText": "Till formuläret",
+    "formUrl": "Länk: https://docs.google.com/forms/d/e/1FAIpQLSeGX8Yl3qdoKPPmyGZMZsEmGhWhQhze_zQrT9RzMHolZJFtVw/viewform",
     "pendingText": "Formulärlänk kommer snart",
     "image": {
       "src": "images/Osa_har.png",

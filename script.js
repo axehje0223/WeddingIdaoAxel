@@ -77,6 +77,13 @@ function renderWelcome(data) {
   const dialog = createInfoDialog();
   const dialogBody = dialog.querySelector(".info-dialog-body");
   const dialogTitle = dialog.querySelector("#info-dialog-title");
+  let countdownTimer = null;
+  dialog.addEventListener("close", () => {
+    if (countdownTimer !== null) {
+      window.clearInterval(countdownTimer);
+      countdownTimer = null;
+    }
+  });
   for (const tile of tiles) {
     const button = element("button", `image-tile tile-${tile.id}`);
     button.type = "button";
@@ -93,7 +100,35 @@ function renderWelcome(data) {
     layout.append(button);
   }
 
-  addImage(layout, data.images?.hero, "hero-image", "Bröllopsaffischen med Ida och Axel och deras namn.");
+  const heroImage = addImage(layout, data.images?.hero, "hero-image", "Bröllopsaffischen med Ida och Axel och deras namn.");
+  if (heroImage) {
+    heroImage.setAttribute("role", "button");
+    heroImage.setAttribute("tabindex", "0");
+    heroImage.setAttribute("aria-label", "Visa nedräkning till bröllopet");
+    heroImage.setAttribute("aria-haspopup", "dialog");
+    const openCountdown = () => {
+      dialogBody.replaceChildren();
+      dialogTitle.textContent = "Nedräkning till bröllopet";
+      const countdown = element("div", "countdown countdown-dialog");
+      for (const [key, label] of [["days", "Dagar"], ["hours", "Timmar"], ["minutes", "Minuter"], ["seconds", "Sekunder"]]) {
+        const item = element("div", "countdown-item");
+        const value = element("span", "countdown-value", "00");
+        value.dataset.countdown = key;
+        item.append(value, element("span", "countdown-label", label));
+        countdown.append(item);
+      }
+      dialogBody.append(countdown);
+      countdownTimer = startCountdown(data.couple.dateISO, countdown);
+      dialog.showModal();
+    };
+    heroImage.addEventListener("click", openCountdown);
+    heroImage.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openCountdown();
+      }
+    });
+  }
   main.append(hero);
   hero.append(layout);
   hero.append(dialog);
@@ -142,8 +177,7 @@ function openInfoDialog(data, tile, dialog, body, title) {
 
 function renderRsvpInfo(data, parent) {
   const section = element("section", "info-section rsvp-info");
-  addText(section, "p", "section-description", data.rsvp?.description || "Vi hoppas att du vill fira dagen med oss.");
-  addImage(section, data.rsvp?.image, "section-image", "Handmålad OSA-illustration i blått och rött.");
+  addText(section, "p", "section-description", data.rsvp?.description || "Fyll i formuläret nedan!");
   if (data.rsvp?.formUrl) {
     const action = element("a", "rsvp-action", data.rsvp.buttonText || "Anmäl här");
     action.href = data.rsvp.formUrl;
@@ -151,7 +185,7 @@ function renderRsvpInfo(data, parent) {
     action.rel = "noopener noreferrer";
     section.append(action);
   } else {
-    addText(section, "p", "rsvp-note", data.rsvp?.pendingText || "Formulärlänk kommer snart");
+    addText(section, "p", "rsvp-note", data.rsvp?.pendingText || "Länk: https://docs.google.com/forms/d/e/1FAIpQLSeGX8Yl3qdoKPPmyGZMZsEmGhWhQhze_zQrT9RzMHolZJFtVw/viewform");
   }
   parent.append(section);
 }
@@ -244,10 +278,11 @@ function renderOptions(id, data, index, parent = main) {
 function renderDressCode(data, index, parent = main) {
   const { inner } = createSection("dressCode", data.dressCode, index, parent);
   const block = element("div", "dress-code-block");
-  //addText(block, "p", "dress-code-name", data.dressCode.name);
+  addImage(inner, { src: "images\\vimplar.png" }, "section-image", data.dressCode.title);
+  addText(block, "p", "dress-code-name", data.dressCode.name);
   addText(block, "p", "dress-code-description", data.dressCode.description);
   inner.append(block);
-  addImage(inner, data.dressCode.image, "section-image", data.dressCode.title);
+  
 }
 
 function renderGuests(data, index, parent = main) {
@@ -308,32 +343,33 @@ function renderMetadata(data) {
   wordmark.setAttribute("aria-label", `${data.couple.names} bröllop`);
 }
 
-function startCountdown(dateISO) {
-  const countdown = document.querySelector("#countdown");
+function startCountdown(dateISO, countdown) {
   const target = new Date(dateISO).getTime();
-  if (!Number.isFinite(target)) {
-    countdown.hidden = true;
-    return;
-  }
+  if (!Number.isFinite(target)) throw new Error("Ogiltigt datum för nedräkningen.");
   const update = () => {
     const difference = target - Date.now();
     if (difference <= 0) {
       countdown.replaceChildren(element("p", "hero-welcome", "Idag firar vi tillsammans!"));
-      window.clearInterval(timer);
-      return;
+      return false;
     }
     const values = {
       days: Math.floor(difference / 86_400_000),
       hours: Math.floor((difference % 86_400_000) / 3_600_000),
       minutes: Math.floor((difference % 3_600_000) / 60_000),
+      seconds: Math.floor((difference % 60_000) / 1_000),
     };
     for (const [key, value] of Object.entries(values)) {
       const counter = countdown.querySelector(`[data-countdown="${key}"]`);
       if (counter) counter.textContent = String(value).padStart(2, "0");
     }
+    return true;
   };
-  update();
-  const timer = window.setInterval(update, 60_000);
+  if (!update()) return null;
+  let timer;
+  timer = window.setInterval(() => {
+    if (!update()) window.clearInterval(timer);
+  }, 1_000);
+  return timer;
 }
 
 async function loadWeddingPage() {
