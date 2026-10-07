@@ -1,19 +1,6 @@
 // Edit names, dates, text, and local image paths in content/wedding.json.
 const contentPath = "content/wedding.json";
-const sectionOrder = [
-  ["welcome", "welcome"],
-  ["ceremony", "ceremony"],
-  ["schedule", "schedule"],
-  ["transport", "transport"],
-  ["accommodation", "accommodation"],
-  ["dressCode", "dressCode"],
-  ["guests", "guests"],
-  ["gifts", "gifts"],
-  ["contact", "contact"],
-];
-
 const main = document.querySelector("#site-content");
-const navigation = document.querySelector("#main-navigation");
 const pageStatus = document.querySelector("#page-status");
 const footer = document.querySelector("#site-footer");
 const wordmark = document.querySelector(".wordmark");
@@ -53,18 +40,18 @@ function addImage(parent, image, className, alt) {
   return figure;
 }
 
-function createSection(id, content, index) {
+function createSection(id, content, index, parent = main) {
   const section = element("section", "content-section");
   section.id = id;
   section.setAttribute("aria-labelledby", `${id}-title`);
   const inner = element("div", "section-inner");
   section.append(inner);
   const heading = element("header", "section-heading");
-  addText(heading, "p", "section-kicker", `Del ${String(index + 1).padStart(2, "0")}`);
+  if (index >= 0) addText(heading, "p", "section-kicker", `Del ${String(index + 1).padStart(2, "0")}`);
   const title = addText(heading, "h2", "section-title", content.title);
   if (title) title.id = `${id}-title`;
   inner.append(heading);
-  main.append(section);
+  parent.append(section);
   return { section, inner };
 }
 
@@ -78,61 +65,106 @@ function renderWelcome(data) {
   names.classList.add("visually-hidden");
   hero.append(names);
 
-  const topRow = element("div", "hero-top");
-  addImage(topRow, data.images?.hero, "hero-image", "Bröllopsaffischen med Ida och Axel och deras namn.");
+  const layout = element("div", "hero-layout");
+  const tiles = [
+    { id: "rsvp", label: "OSA här", image: "images/Osa_har.png", alt: "Handmålad av Ida" },
+    { id: "ceremony", label: "Plats och tid", image: data.ceremony.image, alt: "Starrkärrs kyrka." },
+    { id: "gifts", label: "Presenter", image: "images/Present.png", alt: "Ida och Axel på sin bröllopsaffisch." },
+    { id: "dressCode", label: "Klädkod", image: "images/Kladkod.png", alt: "Broderat Ida och Axel-motiv." },
+    { id: "questions", label: "Frågor på det?", image: "images/Fragor_Pa_det.png", alt: "Ida och Axel." },
+  ];
 
-  const rsvp = element("section", "rsvp-panel");
-  rsvp.setAttribute("aria-label", data.rsvp?.title || "OSA");
-  addImage(rsvp, data.rsvp?.image, "rsvp-artwork", "Handmålad OSA-illustration i blått och rött.");
-  const buttonText = data.rsvp?.buttonText || "Anmäl här";
+  const dialog = createInfoDialog();
+  const dialogBody = dialog.querySelector(".info-dialog-body");
+  const dialogTitle = dialog.querySelector("#info-dialog-title");
+  for (const tile of tiles) {
+    const button = element("button", `image-tile tile-${tile.id}`);
+    button.type = "button";
+    button.dataset.panel = tile.id;
+    button.setAttribute("aria-label", tile.label);
+    button.setAttribute("aria-haspopup", "dialog");
+    const image = document.createElement("img");
+    image.src = tile.image;
+    image.alt = "";
+    image.loading = "lazy";
+    image.addEventListener("error", () => image.remove(), { once: true });
+    button.append(image);
+    button.addEventListener("click", () => openInfoDialog(data, tile, dialog, dialogBody, dialogTitle));
+    layout.append(button);
+  }
+
+  addImage(layout, data.images?.hero, "hero-image", "Bröllopsaffischen med Ida och Axel och deras namn.");
+  main.append(hero);
+  hero.append(layout);
+  hero.append(dialog);
+
+  if (data.images?.gallery?.length) renderGallery(data, hero);
+}
+
+function createInfoDialog() {
+  const dialog = element("dialog", "info-dialog");
+  dialog.setAttribute("aria-labelledby", "info-dialog-title");
+  const card = element("div", "info-dialog-card");
+  const header = element("header", "info-dialog-header");
+  addText(header, "h2", "", "Information").id = "info-dialog-title";
+  const close = element("button", "dialog-close", "×");
+  close.type = "button";
+  close.setAttribute("aria-label", "Stäng informationen");
+  close.addEventListener("click", () => dialog.close());
+  header.append(close);
+  const body = element("div", "info-dialog-body");
+  card.append(header, body);
+  dialog.append(card);
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  return dialog;
+}
+
+function openInfoDialog(data, tile, dialog, body, title) {
+  body.replaceChildren();
+  title.textContent = tile.label;
+  dialog.setAttribute("aria-label", tile.label);
+  if (tile.id === "ceremony") {
+    renderCeremony(data, -1, body);
+    renderOptions("transport", data, -1, body);
+  } else if (tile.id === "gifts") {
+    renderGifts(data, -1, body);
+  } else if (tile.id === "rsvp") {
+    renderRsvpInfo(data, body);
+  } else if (tile.id === "dressCode") {
+    renderDressCode(data, -1, body);
+  } else {
+    renderContact(data, -1, body);
+  }
+  dialog.showModal();
+}
+
+function renderRsvpInfo(data, parent) {
+  const section = element("section", "info-section rsvp-info");
+  addText(section, "p", "section-description", data.rsvp?.description || "Vi hoppas att du vill fira dagen med oss.");
+  addImage(section, data.rsvp?.image, "section-image", "Handmålad OSA-illustration i blått och rött.");
   if (data.rsvp?.formUrl) {
-    const action = element("a", "rsvp-action", buttonText);
+    const action = element("a", "rsvp-action", data.rsvp.buttonText || "Anmäl här");
     action.href = data.rsvp.formUrl;
     action.target = "_blank";
     action.rel = "noopener noreferrer";
-    rsvp.append(action);
+    section.append(action);
   } else {
-    const action = element("button", "rsvp-action", buttonText);
-    action.type = "button";
-    action.disabled = true;
-    rsvp.append(action);
-    addText(rsvp, "p", "rsvp-note", data.rsvp?.pendingText || "Formulärlänk kommer snart");
+    addText(section, "p", "rsvp-note", data.rsvp?.pendingText || "Formulärlänk kommer snart");
   }
-  topRow.append(rsvp);
-  hero.append(topRow);
-
-  const details = element("div", "hero-details");
-  const dateCopy = element("div", "hero-date-copy");
-  addText(dateCopy, "p", "hero-date", data.couple.date);
-  addText(dateCopy, "p", "hero-welcome", data.welcome.text);
-  details.append(dateCopy);
-
-  const countdown = element("div", "countdown");
-  countdown.id = "countdown";
-  countdown.setAttribute("role", "timer");
-  countdown.setAttribute("aria-label", "Nedräkning till bröllopet");
-  for (const [label, key] of [["Dagar", "days"], ["Timmar", "hours"], ["Minuter", "minutes"]]) {
-    const item = element("div", "countdown-item");
-    addText(item, "span", "countdown-value", "--").dataset.countdown = key;
-    addText(item, "span", "countdown-label", label);
-    countdown.append(item);
-  }
-  details.append(countdown);
-  hero.append(details);
-  main.append(hero);
-
-  if (data.images?.gallery?.length) {
-    const gallery = element("div", "gallery");
-    gallery.setAttribute("aria-label", "Bildgalleri");
-    for (const image of data.images.gallery) {
-      addImage(gallery, image, "gallery-image", "Bild från bröllopet");
-    }
-    if (gallery.childElementCount) hero.after(gallery);
-  }
+  parent.append(section);
 }
 
-function renderCeremony(data, index) {
-  const { inner } = createSection("ceremony", data.ceremony, index);
+function renderGallery(data, hero) {
+  const gallery = element("div", "gallery");
+  gallery.setAttribute("aria-label", "Bildgalleri");
+  for (const image of data.images.gallery) addImage(gallery, image, "gallery-image", "Bild från bröllopet");
+  if (gallery.childElementCount) hero.after(gallery);
+}
+
+function renderCeremony(data, index, parent = main) {
+  const { inner } = createSection("ceremony", data.ceremony, index, parent);
   const layout = element("div", "ceremony-layout");
   const details = document.createElement("dl");
   details.className = "detail-list";
@@ -152,9 +184,23 @@ function renderCeremony(data, index) {
   inner.append(layout);
 }
 
-function renderSchedule(data, index) {
-  const { inner } = createSection("schedule", data.schedule, index);
-  addText(inner, "p", "section-description", data.schedule.description);
+function renderSchedule(data) {
+  const section = element("section", "schedule-section");
+  const toggle = element("button", "image-tile schedule-toggle");
+  toggle.type = "button";
+  toggle.setAttribute("aria-label", data.schedule.navTitle || data.schedule.title);
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.setAttribute("aria-controls", "schedule-panel");
+  const image = document.createElement("img");
+  image.src = "images/Schema.png";
+  image.alt = "";
+  toggle.append(image);
+  const panel = element("div", "schedule-panel");
+  panel.id = "schedule-panel";
+  panel.hidden = true;
+  panel.setAttribute("aria-labelledby", "schedule-title");
+  addText(panel, "h2", "schedule-title", data.schedule.title).id = "schedule-title";
+  addText(panel, "p", "section-description", data.schedule.description);
   const timeline = element("ol", "timeline");
   for (const event of data.schedule.events || []) {
     const item = element("li", "timeline-item");
@@ -167,13 +213,20 @@ function renderSchedule(data, index) {
     item.append(details);
     timeline.append(item);
   }
-  inner.append(timeline);
-  addImage(inner, data.schedule.image, "section-image", data.schedule.title);
+  panel.append(timeline);
+  addImage(panel, data.schedule.image, "section-image", data.schedule.title);
+  toggle.addEventListener("click", () => {
+    const expanded = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!expanded));
+    panel.hidden = expanded;
+  });
+  section.append(toggle, panel);
+  main.append(section);
 }
 
-function renderOptions(id, data, index) {
+function renderOptions(id, data, index, parent = main) {
   const config = data[id];
-  const { inner } = createSection(id, config, index);
+  const { inner } = createSection(id, config, index, parent);
   addText(inner, "p", "section-description", config.description);
   const cards = element("div", "option-grid");
   for (const option of config.options || []) {
@@ -188,36 +241,36 @@ function renderOptions(id, data, index) {
   addImage(inner, config.image, "section-image", config.title);
 }
 
-function renderDressCode(data, index) {
-  const { inner } = createSection("dressCode", data.dressCode, index);
+function renderDressCode(data, index, parent = main) {
+  const { inner } = createSection("dressCode", data.dressCode, index, parent);
   const block = element("div", "dress-code-block");
-  addText(block, "p", "dress-code-name", data.dressCode.name);
+  //addText(block, "p", "dress-code-name", data.dressCode.name);
   addText(block, "p", "dress-code-description", data.dressCode.description);
   inner.append(block);
   addImage(inner, data.dressCode.image, "section-image", data.dressCode.title);
 }
 
-function renderGuests(data, index) {
-  const { inner } = createSection("guests", data.guests, index);
+function renderGuests(data, index, parent = main) {
+  const { inner } = createSection("guests", data.guests, index, parent);
   addText(inner, "p", "guest-note", data.guests.description);
   addLink(inner, data.guests.linkLabel, data.guests.linkUrl);
   addImage(inner, data.guests.image, "section-image", data.guests.title);
 }
 
-function renderGifts(data, index) {
-  const { inner } = createSection("gifts", data.gifts, index);
+function renderGifts(data, index, parent = main) {
+  const { inner } = createSection("gifts", data.gifts, index, parent);
   const layout = element("div", "gift-layout");
-  layout.append(element("div", "gift-mark", "I + A"));
+  //layout.append(element("div", "gift-mark", "I + A"));
   const copy = element("div", "");
   addText(copy, "p", "section-copy", data.gifts.description);
   addLink(copy, data.gifts.linkLabel, data.gifts.linkUrl);
   layout.append(copy);
   inner.append(layout);
-  addImage(inner, data.gifts.image, "section-image", data.gifts.title);
+  addImage(inner, { src: "images\\1000006547.jpg" }, "section-image", data.gifts.title);
 }
 
-function renderContact(data, index) {
-  const { inner } = createSection("contact", data.contact, index);
+function renderContact(data, index, parent = main) {
+  const { inner } = createSection("contact", data.contact, index, parent);
   const layout = element("div", "contact-layout");
   addText(layout, "p", "section-copy", data.contact.description);
   const methods = element("div", "contact-methods");
@@ -235,15 +288,6 @@ function renderContact(data, index) {
   layout.append(methods);
   inner.append(layout);
   addImage(inner, data.contact.image, "section-image", data.contact.title);
-}
-
-function renderNavigation(data) {
-  navigation.replaceChildren();
-  for (const [id, key] of sectionOrder) {
-    const link = element("a", "", data[key].navTitle || data[key].title);
-    link.href = `#${id}`;
-    navigation.append(link);
-  }
 }
 
 function renderFooter(data) {
@@ -301,17 +345,8 @@ async function loadWeddingPage() {
 
     renderMetadata(data);
     renderWelcome(data);
-    renderNavigation(data);
-    renderCeremony(data, 1);
-    renderSchedule(data, 2);
-    renderOptions("transport", data, 3);
-    renderOptions("accommodation", data, 4);
-    renderDressCode(data, 5);
-    renderGuests(data, 6);
-    renderGifts(data, 7);
-    renderContact(data, 8);
+    renderSchedule(data);
     renderFooter(data);
-    startCountdown(data.couple.dateISO);
     pageStatus.remove();
     main.setAttribute("aria-busy", "false");
   } catch (error) {

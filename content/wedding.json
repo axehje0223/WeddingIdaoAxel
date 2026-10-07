@@ -19,7 +19,7 @@
     "description": "Ida är döpt här, hur kul?",
     "mapUrl": "https://www.google.com/maps/place/Starrk%C3%A4rrs+kyrka/@57.9340019,12.1470972,514m/data=!3m2!1e3!4b1!4m6!3m5!1s0x46455c8f281e6ae3:0xf0da9a13b37cb004!8m2!3d57.9340019!4d12.1496775!16s%2Fg%2F11dyjq57r?entry=ttu&g_ep=EgoyMDI2MDkyOC4wIKXMDSoASAFQAw%3D%3D",
     "mapLabel": "Visa på karta",
-    "image": "images/starrkrr-church.jpg"
+    "image": "images/Starrkarrskyrka.png"
   },
   "schedule": {
     "title": "Schema för dagen",
@@ -27,39 +27,39 @@
     "description": "Vi fyller på med tider och detaljer när allt är på plats.",
     "events": [
       {
-        "time": "13:15",
+        "time": "13 något",
         "title": "Buss avgår från Göteborg",
-        "description": "Om du har anmält bussplats har du fått mail om tid och plats."
+        "description": "Om du har anmält bussplats har du fått mail om tid och plats för upphämtning."
       },
       {
         "time": "14:00",
         "title": "Vigsel",
-        "description": "Här vinner den som har flest folk på sin sida i kyrkan."
+        "description": "Här vinner den som har flest på sin sida i kyrkan."
       },
       {
-        "time": "15:15",
-        "title": "Buss till Bröllops festen",
+        "time": "Sen",
+        "title": "Buss till bröllopsfesten",
         "description": "Nu snackar vi"
       },
 
         {
-          "time": "15:30",
+          "time": "Efter det",
           "title": "Mingel och bubbel",
           "description": "Gott!"
         },
       {
-        "time": "18:00",
+        "time": "Och såklart",
         "title": "Middag",
         "description": "Också gott!"
       },
       {
-        "time": "21:00",
-        "title": "Feeeeeest",
-        "description": ""
+        "time": "Efter sista sista sista talet",
+        "title": "Kalas",
+        "description": "*Nu snackar vi intensifies*"
       },
       {
         "time": "01:00",
-        "title": "Buss hem avgår",
+        "title": "Buss hem",
         "description": "Ändå skönt eller?"
       }
     ],
@@ -68,7 +68,7 @@
   "transport": {
     "title": "Transport",
     "navTitle": "Transport",
-    "description": "Det kommer gå bussar från Göteborg 13:15 till Starrkärr kyrka och sedan från vigseln till festlokalen. Det går såklart också att köra bil mellan kyrkan och festen men för att köra hem sen får du inte ha druckit alkoholen.",
+    "description": "Det kommer gå bussar från Göteborg strax efter 13 till Starrkärr kyrka och sedan från vigseln till festlokalen. Det går såklart också att köra bil mellan kyrkan och festen men för att köra hem sen får du inte ha druckit alkoholen.",
     "options": [],
     "image": null
   },
@@ -80,10 +80,10 @@
     "image": null
   },
   "dressCode": {
-    "title": "Klädkod",
-    "navTitle": "Klädkod",
-    "name": "Kostym",
-    "description": "Formella klädkoden är kostym, Axel kommer ha frack och Ida kommer ha brudklänning. Ta gärna det ni har i garderoben, behöver knappt stryka det.",
+    "title": "Kavaj",
+    "navTitle": "klädkod",
+    "name": "Kavaj",
+    "description": "Formella klädkoden är kavaj, Axel kommer ha frack och Ida kommer ha brudklänning. Vi gillar färgglatt och fint, ta gärna något ni redan har i garderoben. Vi kommer vara mycket utomhus med ojämt underlag.",
     "image": null
   },
   "guests": {
@@ -95,25 +95,25 @@
     "image": null
   },
   "gifts": {
-    "title": "Presenter",
-    "navTitle": "Presenter",
-    "description": "Då vi ska renovera vårt nyköpte hus (shoutout Fredings väg 4) så får ni gärna bidra med skruv eller kontanter till skruv.",
+    "title": "Bygg och bidra som man brukar säga",
+    "navTitle": "present??",
+    "description": "Då vi ska renovera vårt nyköpta hus (shoutout Fredings väg 4) så får ni gärna bidra med skruv eller kontanter till skruv.",
     "linkLabel": "",
     "linkUrl": "",
-    "image": null
+    "image": "Present.png"
   },
   "contact": {
-    "title": "Frågor på det?",
+    "title": "Asså undrar du något?",
     "navTitle": "Kontakt",
-    "description": "Har ni några frågor? Hör gärna av er till idaoaxelgiftersig@gmail.com",
-    "email": "idaoaxelgiftersig@gmail.com",
+    "description": "Dra iväg ett mail till ---->",
+    "email": "idaochaxelskagiftas@gmail.com",
     "phone": "",
     "person": "Ida och Axel",
-    "image": null
+    "image": "Fragor_Pa_det.png"
   },
   "images": {
     "hero": {
-      "src": "images/BildPåOss_cropped.jpg",
+      "src": "images/banner igen igen.png",
       "alt": "Bröllopsaffischen med Ida och Axel och deras namn."
     },
     "gallery": []
@@ -124,12 +124,12 @@
     "formUrl": "",
     "pendingText": "Formulärlänk kommer snart",
     "image": {
-      "src": "images/osa_background.jpg",
+      "src": "images/Osa_har.png",
       "alt": "Handmålad OSA-illustration i blått och rött."
     }
   },
   "footer": {
     "text": "Ida och Axel · 5 juni 2027",
-    "note": "Vi ser fram emot att fira med er."
+    "note": "Tihi skoj skoj skoj"
   }
 }

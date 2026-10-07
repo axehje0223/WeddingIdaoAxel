@@ -282,12 +282,12 @@ a {
 .hero-image {
   position: relative;
   width: min(100%, 340px);
-  aspect-ratio: 511 / 1050;
+  aspect-ratio: 511 / 511;
   margin: 0;
   overflow: hidden;
   border: 0;
   background: transparent;
-  box-shadow: 12px 14px 0 rgb(195 72 64 / 15%);
+  box-shadow: none;
 }
 
 .hero-image img,
@@ -890,5 +890,338 @@ a {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: #fff;
+  color: #263f5d;
+}
+
+.site-header {
+  min-height: 60px;
+  border-bottom-color: #e8e8e4;
+  background: rgb(255 255 255 / 96%);
+}
+
+.wedding-hero {
+  overflow: visible;
+  padding: clamp(24px, 4vw, 48px) 24px 28px;
+  background: #fff;
+  background-image: none;
+}
+
+.hero-layout {
+  display: grid;
+  width: min(100%, 1040px);
+  grid-template-areas:
+    ". rsvp ."
+    "ceremony poster gifts"
+    "dressCode poster questions";
+  grid-template-columns: minmax(150px, 1fr) minmax(270px, 340px) minmax(150px, 1fr);
+  grid-template-rows: minmax(100px, auto) minmax(230px, 1fr) minmax(230px, 1fr);
+  align-items: center;
+  gap: 8px clamp(20px, 4vw, 54px);
+  margin: 0 auto;
+}
+
+.hero-names {
+  font-size: 1px;
+}
+
+.hero-image {
+  grid-area: poster;
+  grid-row: 2 / 4;
+  justify-self: center;
+  width: fit-content;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  background: transparent;
+  box-shadow: none;
+}
+
+.hero-image img {
+  position: static;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.image-tile {
+  position: relative;
+  display: block;
+  width: min(100%, 194px);
+  height: auto;
+  justify-self: center;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: #fff;
+  box-shadow: none;
+  color: #fff;
+  cursor: pointer;
+  isolation: isolate;
+  transition: box-shadow 180ms ease, transform 180ms ease;
+}
+
+.image-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: none;
+}
+
+.image-tile img {
+  position: relative;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.image-tile::after {
+  display: none;
+}
+
+.tile-rsvp {
+  grid-area: rsvp;
+  width: min(210px, 100%);
+}
+
+.tile-ceremony { grid-area: ceremony; }
+.tile-gifts { grid-area: gifts; }
+.tile-dressCode { grid-area: dressCode; }
+.tile-questions { grid-area: questions; }
+
+.schedule-section {
+  padding: 0 24px 64px;
+  background: #fff;
+}
+
+.schedule-toggle {
+  margin: 0 auto;
+}
+
+.schedule-panel {
+  width: min(100%, 720px);
+  margin: 28px auto 0;
+  animation: arrive 360ms ease-out both;
+}
+
+.schedule-panel[hidden] {
+  display: none;
+}
+
+.schedule-title {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: 34px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.schedule-panel > .section-description {
+  margin: 0 auto 32px;
+  text-align: center;
+}
+
+.info-dialog {
+  width: min(760px, calc(100% - 32px));
+  max-width: none;
+  max-height: min(86dvh, 900px);
+  border: 0;
+  border-radius: 4px;
+  padding: 0;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 22px 80px rgb(16 27 38 / 24%);
+  color: #263f5d;
+}
+
+.info-dialog::backdrop {
+  background: rgb(24 34 45 / 38%);
+  backdrop-filter: blur(7px);
+}
+
+.info-dialog[open] {
+  animation: arrive 200ms ease-out both;
+}
+
+.info-dialog-card {
+  display: grid;
+  max-height: min(86dvh, 900px);
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.info-dialog-header {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  display: flex;
+  min-height: 68px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #e8e8e4;
+  padding: 12px 22px 12px 28px;
+  background: #fff;
+}
+
+.info-dialog-header h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.dialog-close {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #e4e1da;
+  border-radius: 50%;
+  padding: 0;
+  background: #fff;
+  color: #263f5d;
+  cursor: pointer;
+  font: inherit;
+  font-size: 27px;
+  line-height: 1;
+}
+
+.info-dialog-body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.info-dialog .content-section {
+  padding: 26px 30px;
+  background: #fff;
+}
+
+.info-dialog .content-section::before {
+  display: none;
+}
+
+.info-dialog .section-inner {
+  width: 100%;
+}
+
+.info-dialog .section-heading {
+  margin-bottom: 22px;
+}
+
+.info-dialog .section-title {
+  font-size: 34px;
+}
+
+.info-dialog .section-image {
+  min-height: 230px;
+  margin-top: 24px;
+}
+
+.info-dialog .detail-list {
+  gap: 18px 28px;
+}
+
+.info-section {
+  padding: 26px 30px;
+}
+
+.rsvp-info .section-image {
+  min-height: 250px;
+  margin: 22px 0 4px;
+  border: 0;
+  box-shadow: none;
+}
+
+.rsvp-info .section-image img {
+  object-fit: contain;
+}
+
+.rsvp-info .rsvp-action {
+  display: inline-block;
+  margin-top: 14px;
+}
+
+.rsvp-info .rsvp-note {
+  position: static;
+  margin-top: 12px;
+  color: #5d7080;
+  text-align: left;
+}
+
+.info-dialog .info-section + .content-section {
+  border-top: 1px solid #e8e8e4;
+}
+
+.site-footer {
+  border-top-color: #e8e8e4;
+  background: #fff;
+}
+
+@media (max-width: 760px) {
+  .hero-layout {
+    width: min(100%, 540px);
+    grid-template-areas:
+      "rsvp rsvp"
+      "poster poster"
+      "ceremony gifts"
+      "dressCode questions";
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto auto auto;
+    gap: 16px 12px;
+  }
+
+  .hero-image {
+    grid-row: auto;
+    max-width: min(280px, 74vw);
+  }
+
+  .image-tile {
+    width: min(100%, 200px);
+  }
+
+  .tile-rsvp {
+    width: min(220px, 78%);
+  }
+
+  .schedule-section {
+    padding-bottom: 48px;
+  }
+}
+
+@media (max-width: 430px) {
+  .wedding-hero {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .info-dialog-header {
+    min-height: 60px;
+    padding-right: 14px;
+    padding-left: 18px;
+  }
+
+  .info-dialog-header h2 {
+    font-size: 23px;
+  }
+
+  .info-dialog .content-section,
+  .info-section {
+    padding: 22px 18px;
+  }
+
+  .info-dialog .section-title {
+    font-size: 29px;
+  }
+
+  .info-dialog .detail-list {
+    grid-template-columns: 1fr;
   }
 }
