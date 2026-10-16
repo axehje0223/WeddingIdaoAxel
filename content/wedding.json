@@ -121,7 +121,7 @@
   "rsvp": {
     "title": "OSA",
     "buttonText": "Till formuläret",
-    "formUrl": "Länk: https://docs.google.com/forms/d/e/1FAIpQLSeGX8Yl3qdoKPPmyGZMZsEmGhWhQhze_zQrT9RzMHolZJFtVw/viewform",
+    "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSeGX8Yl3qdoKPPmyGZMZsEmGhWhQhze_zQrT9RzMHolZJFtVw/viewform",
     "pendingText": "Formulärlänk kommer snart",
     "image": {
       "src": "images/Osa_har.png",
